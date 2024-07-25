@@ -1,5 +1,5 @@
 import { createContext, useState } from 'react';
-import runChat from "../config/gemini";
+import runChat from "../config/gemini";  // Ensure this import is correct and the module exists
 
 export const Context = createContext();
 
@@ -11,41 +11,29 @@ const ContextProvider = (props) => {
     const [loading, setLoading] = useState(false);  // Once true it will display loading animation
     const [resultData, setResultData] = useState(""); // To display result on webpage
 
-    const delayPara= (index,nextWord)=>{
-        setTimeout(function(){
-            setResultData(prev=>prev+nextWord);
-        },75*index)
+    const delayPara = (index, nextWord) => {
+        setTimeout(function(){ 
+            setResultData(prev => prev + nextWord);
+        }, 75 * index);
     }
 
-
-    const newChat = ()=>{
-        setLoading(false)
-    setShowResult(false)  
-  }
-
+    const newChat = () => {
+        setLoading(false);
+        setShowResult(false);
+    }
 
     const onSent = async () => {
-        setResultData("");c
+        setResultData("");
         setLoading(true);
         setShowResult(true);
-        // let response;
-        // if(prompt!==undefined){
-        //     response=   await runChat(prompt);
-        //     setRecentPrompt(prompt)
-        // }
-        // else{
-        //     setRecentPrompt(prev=>[...prev,input])
-        //     setRecentPrompt(input)
-        //     response=await runChat(input)
-        // }
-        // setPrevPrompts(prev=>[...prev,input])
-        // setRecentPrompt(input);
-        // const result = await runChat(input);
+
+        // Assuming `runChat` is a function that takes input and returns a result
+        const result = await runChat(input);
+
         let responseArray = result.split("**");
         let newResponse = "";
-        // loop is for when we get ** in our result that stars is replaced that word but in bold format like **React** gets replaced with bold React
-        // ** = bold text
-        // * = new line
+
+        // Loop to replace ** with bold text and * with new lines
         for (let i = 0; i < responseArray.length; i++) {
             if (i === 0 || i % 2 !== 1) {
                 newResponse += responseArray[i];
@@ -55,15 +43,15 @@ const ContextProvider = (props) => {
         }
 
         let newResponse2 = newResponse.split("*").join("</br>");
-         // Assuming `runChat` returns the result data
-         let newResponseArray = newResponse.split(" ");
-         for(let i=0;i<newResponseArray.length;i++)
-         {
+        let newResponseArray = newResponse2.split(" ");
+        for (let i = 0; i < newResponseArray.length; i++) {
             const nextWord = newResponseArray[i];
-            delayPara(i,nextWord+" ") 
-         }
+            delayPara(i, nextWord + " ");
+        }
+
         setLoading(false);
         setInput("");
+        setPrevPrompts(prev => [input, ...prev]); // Update prevPrompts
     }
 
     const contextValue = {

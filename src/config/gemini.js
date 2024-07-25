@@ -10,12 +10,9 @@
  * See the getting started guide for more information
  * https://ai.google.dev/gemini-api/docs/get-started/node
  */
+// import { someFunction } from '@google/generative-ai';
 
-import {
-    GoogleGenerativeAI,
-    HarmCategory,
-    HarmBlockThreshold,
-  } from "@google/generative-ai"
+import { GoogleGenerativeAI,HarmCategory, HarmBlockThreshold} from "@google/generative-ai"
   
 //   const apiKey = process.env.GEMINI_API_KEY;
   const apiKey = "AIzaSyAqmHXxNVZ3CAirQqa7ep0zfdW9vQZC1II";
